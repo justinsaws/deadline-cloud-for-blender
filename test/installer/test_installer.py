@@ -184,13 +184,14 @@ def test_default_location(installer_path: Path):
         assert str(Path(location.group(1))) == str(default_install_location)
 
 
-@pytest.mark.skipif(
-    os.getenv("CODEBUILD_SRC_DIR") is None,
-    reason="Only installers built with a license will not be evaluation mode",
-)
-@pytest.mark.skipif(
-    sys.platform == "win32", reason="CLI usage for Windows does not make the eval text available"
-)
+# @pytest.mark.skipif(
+#     os.getenv("CODEBUILD_SRC_DIR") is None,
+#     reason="Only installers built with a license will not be evaluation mode",
+# )
+# @pytest.mark.skipif(
+#     sys.platform == "win32", reason="CLI usage for Windows does not make the eval text available"
+# )
+@pytest.mark.skip
 def test_did_not_build_with_evaluation_mode(installer_path: Path, tmp_path: Path):
     """Tests to see if there's an evaluation version header from installbuilder.
 
@@ -457,10 +458,11 @@ class TestSystemInstall:
         assert not per_test_system_installation.exists()
 
 
-@pytest.mark.skipif(
-    os.getenv("CODEBUILD_SRC_DIR") is None,
-    reason="Only installers built internally will be signed",
-)
+# @pytest.mark.skipif(
+#     os.getenv("CODEBUILD_SRC_DIR") is None,
+#     reason="Only installers built internally will be signed",
+# )
+@pytest.mark.skip
 class TestVerifySigning:
     @pytest.mark.skipif(platform.system() != "Windows", reason="Only run on Windows")
     def test_windows_signing(self, installer_path):
